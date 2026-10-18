@@ -29,7 +29,6 @@ serde_json = "1"
 handl-ext = { path = "../kernel/crates/handl-ext" }
 handl-language = { path = "../kernel/crates/handl-language" }
 handl-value = { path = "../kernel/crates/handl-value" }
-plugin-engine = { path = "../kernel/crates/plugin-engine" }
 
 [patch."https://github.com/handl-lang/lang"]
 handl-kit-data-canonical = { path = "../lang/crates/handl-kit-data-canonical" }
@@ -41,7 +40,7 @@ handl-kit-canonical = { path = "../kit-canonical/crates/kit-canonical" }
 handl-plugin-ffi = { path = "../ffi/modules/ffi" }
 
 [patch."https://github.com/handl-lang/native"]
-handl-plugin-engine-exec-cranelift = { path = "../native/modules/exec-cranelift" }
+hnl-engine-exec-cranelift = { path = "../native/modules/exec-cranelift" }
 
 [patch."https://github.com/handl-lang/otlp"]
 handl-plugin-lib-otlp-std = { path = "../otlp/modules/lib-otlp-std" }
@@ -62,17 +61,6 @@ handl-plugin-lib-stdlib = { path = "../stdlib/crates/plugin-lib-stdlib" }
 handl-kit-arrow-lower = { path = "../platform/crates/handl-kit-arrow-lower" }
 handl-kit-data = { path = "../platform/crates/handl-kit-data" }
 handl-platform = { path = "../platform/crates/platform" }
-handl-plugin-engine-exec = { path = "../platform/crates/plugin-engine-exec" }
-handl-plugin-engine-exec-bytecode = { path = "../platform/crates/plugin-engine-exec-bytecode" }
-handl-plugin-engine-exec-tree-walk = { path = "../platform/crates/plugin-engine-exec-tree-walk" }
-handl-plugin-engine-lex = { path = "../platform/crates/plugin-engine-lex" }
-handl-plugin-engine-lex-pattern = { path = "../platform/crates/plugin-engine-lex-pattern" }
-handl-plugin-engine-parse = { path = "../platform/crates/plugin-engine-parse" }
-handl-plugin-engine-parse-pratt = { path = "../platform/crates/plugin-engine-parse-pratt" }
-handl-plugin-engine-transform = { path = "../platform/crates/plugin-engine-transform" }
-handl-plugin-engine-transform-rewrite = { path = "../platform/crates/plugin-engine-transform-rewrite" }
-handl-plugin-engine-typecheck = { path = "../platform/crates/plugin-engine-typecheck" }
-handl-plugin-engine-typecheck-handl = { path = "../platform/crates/plugin-engine-typecheck-handl" }
 handl-plugin-ext-detect = { path = "../platform/crates/plugin-ext-detect" }
 handl-plugin-ext-diag = { path = "../platform/crates/plugin-ext-diag" }
 handl-plugin-ext-refinement = { path = "../platform/crates/plugin-ext-refinement" }
@@ -189,3 +177,39 @@ handl-lib-url-whatwg = { path = "../lib-url-whatwg" }
 
 [profile.dev]
 opt-level = 1
+
+[patch."https://github.com/handl-lang/engine"]
+hnl-engine = { path = "../engine" }
+
+[patch."https://github.com/handl-lang/engine-exec"]
+hnl-engine-exec = { path = "../engine-exec" }
+
+[patch."https://github.com/handl-lang/engine-exec-bytecode"]
+hnl-engine-exec-bytecode = { path = "../engine-exec-bytecode" }
+
+[patch."https://github.com/handl-lang/engine-exec-tree-walk"]
+hnl-engine-exec-tree-walk = { path = "../engine-exec-tree-walk" }
+
+[patch."https://github.com/handl-lang/engine-lex"]
+hnl-engine-lex = { path = "../engine-lex" }
+
+[patch."https://github.com/handl-lang/engine-lex-pattern"]
+hnl-engine-lex-pattern = { path = "../engine-lex-pattern" }
+
+[patch."https://github.com/handl-lang/engine-parse"]
+hnl-engine-parse = { path = "../engine-parse" }
+
+[patch."https://github.com/handl-lang/engine-parse-pratt"]
+hnl-engine-parse-pratt = { path = "../engine-parse-pratt" }
+
+[patch."https://github.com/handl-lang/engine-transform"]
+hnl-engine-transform = { path = "../engine-transform" }
+
+[patch."https://github.com/handl-lang/engine-transform-rewrite"]
+hnl-engine-transform-rewrite = { path = "../engine-transform-rewrite" }
+
+[patch."https://github.com/handl-lang/engine-typecheck"]
+hnl-engine-typecheck = { path = "../engine-typecheck" }
+
+[patch."https://github.com/handl-lang/engine-typecheck-handl"]
+hnl-engine-typecheck-handl = { path = "../engine-typecheck-handl" }

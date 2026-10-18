@@ -1,7 +1,7 @@
 //! `hnl-ext-typecheck` — the `typecheck` extension for `hnl` (ADR-0149).
 //!
 //! The checker logic lives in `handl-plugin-ext-typecheck` (the capability
-//! adapter) and `handl-plugin-engine-typecheck-handl` (the Handl-model
+//! adapter) and `hnl-engine-typecheck-handl` (the Handl-model
 //! engine); this crate is the *packaging*: it exports the ADR-0149 ABI
 //! (`handl_ext_manifest` / `handl_ext_dispatch` / `handl_ext_free`) and
 //! implements the `hnl typecheck [paths...]` command surface — `check` is a
