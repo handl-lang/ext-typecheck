@@ -40,7 +40,6 @@ handl-kit-canonical = { path = "../kit-canonical/crates/kit-canonical" }
 handl-plugin-ffi = { path = "../ffi/modules/ffi" }
 
 [patch."https://github.com/handl-lang/native"]
-hnl-engine-exec-cranelift = { path = "../native/modules/exec-cranelift" }
 
 [patch."https://github.com/handl-lang/otlp"]
 handl-plugin-lib-otlp-std = { path = "../otlp/modules/lib-otlp-std" }
@@ -213,3 +212,6 @@ hnl-engine-typecheck = { path = "../engine-typecheck" }
 
 [patch."https://github.com/handl-lang/engine-typecheck-handl"]
 hnl-engine-typecheck-handl = { path = "../engine-typecheck-handl" }
+
+[patch."https://github.com/handl-lang/engine-exec-cranelift"]
+hnl-engine-exec-cranelift = { path = "../engine-exec-cranelift" }
