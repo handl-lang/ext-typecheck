@@ -12,7 +12,7 @@
 //! (ADR-0149 §Consequences): a `DefaultHost` running the `typecheck`
 //! capability of [`TypecheckPlugin`], with the canonical kit injected
 //! through a capture-less closure reading a thread-cached
-//! [`handl_kit_canonical::Kit`] (ADR-0128 §"The 0.8 seam").
+//! [`handl_kit_prelude::Kit`] (ADR-0128 §"The 0.8 seam").
 
 use std::cell::RefCell;
 use std::collections::HashSet;
@@ -21,7 +21,7 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use handl_ext::{ExtRequest, ExtResponse, ExtensionManifest};
-use handl_kit_canonical::Kit;
+use handl_kit_prelude::Kit;
 use handl_platform::{CapabilityRequest, DefaultHost, PlatformError};
 use handl_plugin_ext_detect::{Dialect, detect_dialect};
 use serde_json::json;
