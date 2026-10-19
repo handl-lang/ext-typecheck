@@ -21,6 +21,7 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use handl_ext::{ExtRequest, ExtResponse, ExtensionManifest};
+use handl_kit_pkg::KitProjectExt;
 use handl_kit_prelude::Kit;
 use handl_platform::{CapabilityRequest, DefaultHost, PlatformError};
 use handl_plugin_ext_detect::{Dialect, detect_dialect};

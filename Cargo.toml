@@ -15,6 +15,7 @@ crate-type = ["cdylib", "rlib"]
 handl-ext = { git = "https://github.com/handl-lang/kernel", branch = "main" }
 handl-language = { git = "https://github.com/handl-lang/kernel", branch = "main" }
 handl-kit-prelude = { git = "https://github.com/handl-lang/kit-prelude", branch = "main" }
+handl-kit-pkg = { git = "https://github.com/handl-lang/kit-pkg", branch = "main" }
 handl-platform = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-plugin-ext-detect = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-plugin-ext-typecheck = { git = "https://github.com/handl-lang/host", branch = "main" }

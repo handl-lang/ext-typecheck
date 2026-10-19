@@ -430,6 +430,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "handl-kit-pkg"
+version = "0.1.0"
+dependencies = [
+ "handl-kit-data-prelude",
+ "handl-kit-prelude",
+ "handl-language",
+ "handl-platform 0.1.0",
+]
+
+[[package]]
 name = "handl-kit-prelude"
 version = "0.1.0"
 dependencies = [
@@ -1393,6 +1403,7 @@ name = "hnl-ext-typecheck"
 version = "0.1.0"
 dependencies = [
  "handl-ext",
+ "handl-kit-pkg",
  "handl-kit-prelude",
  "handl-language",
  "handl-platform 0.1.0",
@@ -2350,14 +2361,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b"
 
 [[patch.unused]]
-name = "handl-lib-dedent"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-kit-pkg"
-version = "0.1.0"
-
-[[patch.unused]]
 name = "sepia-acp"
 version = "0.0.0"
 
@@ -2400,3 +2403,7 @@ version = "0.0.0"
 [[patch.unused]]
 name = "sepia-testkit"
 version = "0.0.0"
+
+[[patch.unused]]
+name = "handl-lib-dedent"
+version = "0.1.0"
