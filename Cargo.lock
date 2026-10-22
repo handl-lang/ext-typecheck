@@ -371,6 +371,7 @@ dependencies = [
  "handl-language",
  "handl-lib-type-handl",
  "handl-platform 0.1.0",
+ "handl-plugin-ext-lint",
  "handl-plugin-lib-handl",
  "handl-plugin-lib-stdlib",
  "handl-plugin-module",
@@ -395,10 +396,8 @@ name = "handl-kit-data-prelude"
 version = "0.1.0"
 dependencies = [
  "handl-kit-data",
+ "handl-kit-prelude-lang",
  "handl-language",
- "handl-plugin-ext-diag 0.1.0",
- "handl-runtime",
- "hnl-engine-transform",
  "serde_json",
  "serde_yaml",
 ]
@@ -455,6 +454,7 @@ dependencies = [
  "handl-lib-comb",
  "handl-platform 0.1.0",
  "handl-plugin-ext-diag 0.1.0",
+ "handl-plugin-ext-lint",
  "handl-plugin-lib-char-native",
  "handl-plugin-lib-handl",
  "handl-plugin-lib-stdlib",
@@ -472,6 +472,18 @@ dependencies = [
  "hnl-engine-typecheck-handl",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "handl-kit-prelude-lang"
+version = "0.1.0"
+source = "git+https://github.com/handl-lang/kit-prelude-lang?branch=main#b5db5479ab152497391221200c27a26f82c9aa8e"
+dependencies = [
+ "handl-language",
+ "handl-plugin-ext-diag 0.1.0",
+ "hnl-engine-transform",
+ "serde_json",
+ "serde_yaml",
 ]
 
 [[package]]
@@ -881,6 +893,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "handl-plugin-ext-fmt"
+version = "0.1.0"
+source = "git+https://github.com/handl-lang/host?branch=main#b6f273961ea1aa9eacf540b19ad18f6a309b7f94"
+dependencies = [
+ "handl-language",
+ "handl-platform 0.1.0",
+ "handl-plugin-ext-diag 0.1.0",
+ "hnl-engine-fmt",
+ "hnl-engine-lex-pattern",
+ "hnl-engine-parse",
+ "hnl-engine-parse-pratt",
+ "serde_json",
+]
+
+[[package]]
+name = "handl-plugin-ext-lint"
+version = "0.1.0"
+source = "git+https://github.com/handl-lang/host?branch=main#b6f273961ea1aa9eacf540b19ad18f6a309b7f94"
+dependencies = [
+ "handl-language",
+ "handl-platform 0.1.0",
+ "handl-plugin-ext-diag 0.1.0",
+ "handl-plugin-ext-fmt",
+ "handl-plugin-lib-handl",
+ "hnl-engine-lint",
+ "hnl-engine-typecheck",
+ "serde_json",
+]
+
+[[package]]
 name = "handl-plugin-ext-refinement"
 version = "0.1.0"
 dependencies = [
@@ -949,7 +991,6 @@ dependencies = [
  "hnl-engine-exec-bytecode",
  "hnl-engine-exec-tree-walk",
  "hnl-engine-lex-pattern",
- "hnl-engine-lint",
  "hnl-engine-parse-pratt",
  "hnl-engine-transform",
  "serde_json",
@@ -1300,6 +1341,15 @@ dependencies = [
  "hnl-engine",
  "hnl-engine-exec",
  "rustc-hash",
+ "serde_json",
+]
+
+[[package]]
+name = "hnl-engine-fmt"
+version = "0.1.0"
+source = "git+https://github.com/handl-lang/engine-fmt?branch=main#7585b3a11205fc39635bbdda6a998c2094e90a3a"
+dependencies = [
+ "handl-language",
  "serde_json",
 ]
 
@@ -2361,6 +2411,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b"
 
 [[patch.unused]]
+name = "handl-lib-dedent"
+version = "0.1.0"
+
+[[patch.unused]]
 name = "sepia-acp"
 version = "0.0.0"
 
@@ -2403,7 +2457,3 @@ version = "0.0.0"
 [[patch.unused]]
 name = "sepia-testkit"
 version = "0.0.0"
-
-[[patch.unused]]
-name = "handl-lib-dedent"
-version = "0.1.0"

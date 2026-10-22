@@ -1,7 +1,7 @@
 //! `hnl-ext-typecheck` — the `typecheck` extension for `hnl` (ADR-0149).
 //!
 //! The checker logic lives in `handl-plugin-ext-typecheck` (the capability
-//! adapter) and `hnl-engine-typecheck-handl` (the Handl-model
+//! adapter) and `hnl-engine-typecheck-nbe` (the canonical NBE
 //! engine); this crate is the *packaging*: it exports the ADR-0149 ABI
 //! (`handl_ext_manifest` / `handl_ext_dispatch` / `handl_ext_free`) and
 //! implements the `hnl typecheck [paths...]` command surface — `check` is a
@@ -163,7 +163,7 @@ fn tooling_host() -> Result<DefaultHost, PlatformError> {
     let mut host = DefaultHost::new();
     host.register_plugin(handl_plugin_ext_typecheck::TypecheckPlugin::new(
         Arc::new(|src, prelude| {
-            with_tooling_kit(|kit| kit.typecheck_handl_with_prelude(src, prelude))
+            with_tooling_kit(|kit| kit.typecheck_with_prelude(src, prelude))
         }),
     ));
     host.load()?;
@@ -185,7 +185,7 @@ fn resolve(cwd: &Path, path: &str) -> PathBuf {
 /// Typecheck a single source. Returns 2 on parse error; sets
 /// `out.had_failure` for Error diagnostics.
 ///
-/// The canonical-dialect path always routes through `Kit::typecheck_handl`
+/// The canonical-dialect path always routes through `Kit::typecheck_with_prelude`
 /// (the Handl-authored `.hnl` model adapter, ADR-0105) via the `typecheck`
 /// capability. The dialect routing (Contract/Arrow) is unchanged — only
 /// canonical sources reach the Handl engine.
