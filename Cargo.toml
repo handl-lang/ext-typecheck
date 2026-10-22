@@ -132,6 +132,9 @@ handl-plugin-ffi = { path = "../kit-ffi/modules/ffi" }
 [patch."https://github.com/handl-lang/kit-data-prelude"]
 handl-kit-data-prelude = { path = "../kit-data-prelude/crates/handl-kit-data-prelude" }
 
+[patch."https://github.com/handl-lang/kit-prelude-lang"]
+handl-kit-prelude-lang = { path = "../kit-prelude-lang/crates/handl-kit-prelude-lang" }
+
 [patch."https://github.com/handl-lang/lib-archive"]
 handl-lib-archive = { path = "../lib-archive" }
 
