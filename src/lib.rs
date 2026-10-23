@@ -23,7 +23,7 @@ use std::sync::Arc;
 use handl_ext::{ExtRequest, ExtResponse, ExtensionManifest};
 use handl_kit_pkg::KitProjectExt;
 use handl_kit_prelude::Kit;
-use handl_platform::{CapabilityRequest, DefaultHost, PlatformError};
+use handl_platform::{CapabilityRequest, CapabilityResponse, DefaultHost, PlatformError};
 use handl_plugin_ext_detect::{Dialect, detect_dialect};
 use serde_json::json;
 
@@ -254,7 +254,7 @@ fn typecheck_one(
                 .get("message")
                 .and_then(|v| v.as_str())
                 .unwrap_or("typecheck failed");
-            out.stdout.push_str(&format!("{path}: {msg}\n"));
+            out.stdout.push_str(&render_line(&response, src, path, msg));
             out.had_failure = true;
             0
         }
@@ -265,7 +265,7 @@ fn typecheck_one(
                 .get("message")
                 .and_then(|v| v.as_str())
                 .unwrap_or("typecheck failed");
-            out.stderr.push_str(&format!("{path}: {msg}\n"));
+            out.stderr.push_str(&render_line(&response, src, path, msg));
             2
         }
         other => {
@@ -274,6 +274,39 @@ fn typecheck_one(
             2
         }
     }
+}
+
+/// Render one failure line for a `typecheck` response.
+///
+/// When the response carries the checker's structured byte `span`, the
+/// shared diagnostics formatter produces `file:line:col: severity
+/// [rule]: message` — the same shape `hnl lint` emits. The internal
+/// `typecheck errors:`/`typecheck:` prefixes are redundant next to the
+/// `[typecheck]` rule label, so they're stripped for display. Without a
+/// span the legacy `{path}: {msg}` line is kept.
+fn render_line(response: &CapabilityResponse, src: &str, path: &str, msg: &str) -> String {
+    let span = response.0.get("span").and_then(|s| {
+        let start = s.get("start")?.as_u64()? as usize;
+        let end = s.get("end")?.as_u64()? as usize;
+        Some(handl_plugin_ext_diag::Span::from_byte_range(start, end, src))
+    });
+    let Some(span) = span else {
+        return format!("{path}: {msg}\n");
+    };
+    let detail = msg.strip_prefix("typecheck errors:").unwrap_or(msg).trim_start();
+    let detail = detail.strip_prefix("typecheck:").unwrap_or(detail).trim_start();
+    format!(
+        "{}\n",
+        handl_plugin_ext_diag::render_diagnostic(
+            &handl_plugin_ext_diag::Diagnostic::new(
+                "typecheck",
+                handl_plugin_ext_diag::Severity::Error,
+                span,
+                detail,
+            ),
+            path,
+        )
+    )
 }
 
 // ---------------------------------------------------------------------------

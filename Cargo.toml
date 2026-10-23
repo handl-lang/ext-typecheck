@@ -18,6 +18,7 @@ handl-kit-prelude = { git = "https://github.com/handl-lang/kit-prelude", branch 
 handl-kit-pkg = { git = "https://github.com/handl-lang/kit-pkg", branch = "main" }
 handl-platform = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-plugin-ext-detect = { git = "https://github.com/handl-lang/host", branch = "main" }
+handl-plugin-ext-diag = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-plugin-ext-typecheck = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-plugin-ext-refinement = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-runtime = { git = "https://github.com/handl-lang/host", branch = "main" }
