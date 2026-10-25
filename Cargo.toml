@@ -28,47 +28,6 @@ serde_json = "1"
 # sibling checkouts; without the checkouts (or this block), the git sources
 # are used. Same dev-link pattern as the `lib-*` repos.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [profile.dev]
 opt-level = 1
 
@@ -165,9 +124,6 @@ handl-plugin-lib-crypto = { path = "../lib-crypto" }
 
 [patch."https://github.com/handl-lang/lib-datetime"]
 handl-lib-datetime = { path = "../lib-datetime" }
-
-[patch."https://github.com/handl-lang/lib-dedent"]
-handl-lib-dedent = { path = "../lib-dedent" }
 
 [patch."https://github.com/handl-lang/lib-encoding"]
 handl-lib-encoding = { path = "../lib-encoding" }
@@ -310,7 +266,6 @@ handl-plugin-lib-handl = { path = "../host/crates/plugin-lib-handl" }
 handl-plugin-lib-tag = { path = "../host/crates/plugin-lib-tag" }
 handl-plugin-module = { path = "../host/crates/plugin-module" }
 handl-runtime = { path = "../host/crates/handl-runtime" }
-
 
 [patch."https://github.com/handl-lang/lib-char"]
 handl-lib-char = { path = "../lib-char" }
