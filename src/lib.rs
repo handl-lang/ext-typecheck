@@ -553,3 +553,36 @@ mod tests {
         assert_eq!(names, ["typecheck", "check"]);
     }
 }
+
+/// The kit-language matrix: this is the *only* configuration that reproduces
+/// the family-record failure, and it runs in ~1 s instead of rebuilding the
+/// extension and driving the CLI.
+#[cfg(test)]
+mod kit_record_matrix {
+    fn cases() -> Vec<(&'static str, &'static str)> {
+        vec![
+            ("lone arrow ctor", "P := {\n  PC : (x : Number) ~> P\n}\n"),
+            ("two-arg arrow ctor", "PE := {\n  PE : (pos : Number, msg : Str) ~> PE\n}\n"),
+            ("bare + arrow", "P := {\n  PN : P,\n  PC : (x : Number) ~> P\n}\n"),
+            ("nullary only", "N := {\n  Zero : N\n}\n"),
+        ]
+    }
+
+    // Known failing: under the kit assembly the record declaration is not
+    // lowered (the ctor name is looked up as a variable), while the same
+    // source lowers fine under the data-prelude assembly. Un-ignore once
+    // `family_record_plan` reports the predicate it rejects.
+    #[test]
+    #[ignore = "lowering does not fire under the kit language"]
+    fn record_declarations_check_under_the_kit_language() {
+        let kit = handl_kit_prelude::Kit::new().expect("kit assembles");
+        let lang = kit.language();
+        eprintln!("ast.data shape: {:?}", lang.ast.get_by_identity("data").is_some());
+        eprintln!("types.data rule: {:?}", lang.types.get_by_identity("data").is_some());
+        for (name, src) in cases() {
+            // The CLI path: prelude-seeded check (empty prelude here).
+            let out = kit.typecheck_with_prelude(src, &std::collections::HashSet::new());
+            assert!(out.is_ok(), "{name}: {src}\n  -> {out:?}");
+        }
+    }
+}
