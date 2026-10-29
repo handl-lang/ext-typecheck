@@ -95,11 +95,7 @@ handl-kit-data-prelude = { path = "../kit-data-prelude/crates/handl-kit-data-pre
 [patch."https://github.com/handl-lang/kit-prelude-lang"]
 handl-kit-prelude-lang = { path = "../kit-prelude-lang/crates/handl-kit-prelude-lang" }
 
-[patch."https://github.com/handl-lang/lib-archive"]
-handl-lib-archive = { path = "../lib-archive" }
 
-[patch."https://github.com/handl-lang/lib-arrow-iter"]
-handl-lib-arrow-iter = { path = "../lib-arrow-iter" }
 
 [patch."https://github.com/handl-lang/lib-base64"]
 handl-lib-base64 = { path = "../lib-base64" }
@@ -122,8 +118,6 @@ handl-lib-combinators = { path = "../kernel/crates/combinators" }
 [patch."https://github.com/handl-lang/lib-crypto"]
 handl-plugin-lib-crypto = { path = "../lib-crypto" }
 
-[patch."https://github.com/handl-lang/lib-datetime"]
-handl-lib-datetime = { path = "../lib-datetime" }
 
 [patch."https://github.com/handl-lang/lib-encoding"]
 handl-lib-encoding = { path = "../lib-encoding" }
@@ -137,11 +131,7 @@ handl-lib-hello = { path = "../lib-hello" }
 [patch."https://github.com/handl-lang/lib-hex"]
 handl-lib-hex = { path = "../lib-hex" }
 
-[patch."https://github.com/handl-lang/lib-intl"]
-handl-lib-intl = { path = "../lib-intl" }
 
-[patch."https://github.com/handl-lang/lib-intl-c"]
-handl-lib-intl-c = { path = "../lib-intl-c" }
 
 [patch."https://github.com/handl-lang/lib-ip"]
 handl-lib-ip = { path = "../lib-ip" }
@@ -179,8 +169,6 @@ handl-lib-obj = { path = "../kernel/crates/obj" }
 [patch."https://github.com/handl-lang/lib-ops"]
 handl-lib-ops = { path = "../kernel/crates/ops" }
 
-[patch."https://github.com/handl-lang/lib-option"]
-handl-lib-option = { path = "../lib-option" }
 
 [patch."https://github.com/handl-lang/lib-otlp-std"]
 handl-plugin-lib-otlp-std = { path = "../lib-otlp-std" }
@@ -194,8 +182,6 @@ handl-lib-prim = { path = "../kernel/crates/prim" }
 [patch."https://github.com/handl-lang/lib-prim-handl"]
 handl-lib-prim-handl = { path = "../kernel/crates/prim-handl" }
 
-[patch."https://github.com/handl-lang/lib-result"]
-handl-lib-result = { path = "../lib-result" }
 
 [patch."https://github.com/handl-lang/lib-serialize"]
 handl-lib-serialize = { path = "../lib-serialize" }
@@ -213,11 +199,7 @@ handl-lib-transform = { path = "../lib-transform" }
 [patch."https://github.com/handl-lang/lib-type"]
 handl-lib-type = { path = "../kernel/crates/type" }
 
-[patch."https://github.com/handl-lang/lib-unicode"]
-handl-lib-unicode = { path = "../lib-unicode" }
 
-[patch."https://github.com/handl-lang/lib-unicode-c"]
-handl-lib-unicode-c = { path = "../lib-unicode-c" }
 
 [patch."https://github.com/handl-lang/lib-url-rfc"]
 handl-lib-url-rfc = { path = "../lib-url-rfc" }
@@ -265,8 +247,6 @@ handl-plugin-lib-tag = { path = "../host/crates/plugin-lib-tag" }
 handl-plugin-module = { path = "../host/crates/plugin-module" }
 handl-runtime = { path = "../host/crates/handl-runtime" }
 
-[patch."https://github.com/handl-lang/lib-char"]
-handl-lib-char = { path = "../lib-char" }
 
 [patch."https://github.com/handl-lang/lib-comb"]
 handl-lib-comb = { path = "../lib-comb" }
@@ -295,8 +275,6 @@ handl-plugin-lib-otlp-c = { path = "../lib-otlp-c" }
 [patch."https://github.com/handl-lang/lib-perlin"]
 handl-lib-perlin = { path = "../lib-perlin" }
 
-[patch."https://github.com/handl-lang/lib-rand-c"]
-handl-lib-rand-c = { path = "../lib-rand-c" }
 
 
 [patch."https://github.com/handl-lang/lib-serialize-toml-c"]
@@ -314,9 +292,5 @@ handl-lib-tag = { path = "../lib-tag" }
 [patch."https://github.com/handl-lang/lib-test"]
 handl-lib-test = { path = "../lib-test" }
 
-[patch."https://github.com/handl-lang/lib-time-c"]
-handl-lib-time-c = { path = "../lib-time-c" }
 
 
-[patch."https://github.com/handl-lang/lib-utils"]
-handl-lib-utils = { path = "../lib-utils" }
