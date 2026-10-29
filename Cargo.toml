@@ -117,8 +117,6 @@ handl-lib-combinators = { path = "../kernel/crates/combinators" }
 handl-plugin-lib-crypto = { path = "../lib-crypto" }
 
 
-[patch."https://github.com/handl-lang/lib-encoding"]
-handl-lib-encoding = { path = "../lib-encoding" }
 
 [patch."https://github.com/handl-lang/lib-error"]
 handl-lib-error = { path = "../kernel/crates/error" }
@@ -167,8 +165,6 @@ handl-lib-ops = { path = "../kernel/crates/ops" }
 [patch."https://github.com/handl-lang/lib-otlp-std"]
 handl-plugin-lib-otlp-std = { path = "../lib-otlp-std" }
 
-[patch."https://github.com/handl-lang/lib-parse"]
-handl-lib-parse = { path = "../lib-parse" }
 
 [patch."https://github.com/handl-lang/lib-prim"]
 handl-lib-prim = { path = "../kernel/crates/prim" }
