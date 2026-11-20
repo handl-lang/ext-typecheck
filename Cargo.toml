@@ -5,6 +5,9 @@ edition = "2024"
 description = "`hnl typecheck`/`hnl check` — the canonical typechecker as a dynamic `hnl` extension (ADR-0149)."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/handl-lang/ext-typecheck"
+readme = "README.md"
+keywords = ["handl", "extension", "cli"]
+categories = ["development-tools"]
 
 [lib]
 # `cdylib` is the shipped artifact (`libhnl_ext_typecheck.{so,dylib,dll}`);
