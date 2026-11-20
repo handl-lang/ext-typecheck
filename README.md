@@ -37,4 +37,4 @@ without them the `branch = "main"` git sources are used.
 
 ## License
 
-MIT OR Apache-2.0.
+MIT.
