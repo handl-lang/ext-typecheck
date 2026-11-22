@@ -106,8 +106,6 @@ handl-plugin-lib-char-native = { path = "../lib-char-native" }
 [patch."https://github.com/handl-lang/lib-cmp"]
 handl-lib-cmp = { path = "../lib-cmp" }
 
-[patch."https://github.com/handl-lang/lib-collections"]
-handl-lib-collections = { path = "../lib-collections" }
 
 
 [patch."https://github.com/handl-lang/lib-error"]
