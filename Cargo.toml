@@ -110,12 +110,6 @@ handl-lib-cmp = { path = "../lib-cmp" }
 handl-lib-collections = { path = "../lib-collections" }
 
 
-[patch."https://github.com/handl-lang/lib-crypto"]
-handl-plugin-lib-crypto = { path = "../lib-crypto" }
-
-
-
-
 [patch."https://github.com/handl-lang/lib-error"]
 handl-lib-error = { path = "../lib-error" }
 
