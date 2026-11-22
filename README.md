@@ -20,20 +20,21 @@ Exit codes: `0` ok, `1` reported type errors, `2` usage/read/parse errors.
 ## Development
 
 ```bash
-cargo xtask gate        # fmt --check → clippy -D warnings → test → doc
+cargo run --manifest-path xtask/Cargo.toml -- gate   # fmt → clippy → test → doc
 ```
 
-`cargo xtask` wraps the repo's `xtask/` crate (`fmt`, `clippy`, `test`, `doc`,
-`check`, `gate`); `ci.sh` is the gate entry. The crate builds a `cdylib` +
-`rlib`; `cargo test` links the `rlib` statically.
+`xtask/` provides the gate tasks (`fmt`, `clippy`, `test`, `doc`, `check`,
+`gate`); `ci.sh` is the same gate entry for the bupha shell runner. The crate
+builds a `cdylib` + `rlib`; `cargo test` links the `rlib` statically.
 
 ```sh
 cargo build        # target/debug/libhnl_ext_typecheck.so
 HANDL_EXT_DIR=$PWD/target/debug ../host-cli/target/debug/hnl typecheck x.hnl
 ```
 
-Sibling-repo deps resolve from sibling checkouts via the `[patch]` tables;
-without them the `branch = "main"` git sources are used.
+Deps are git deps on `branch = "main"`; locally the workspace-root
+`.cargo/config.toml` patches them to sibling checkouts (dev-only, never
+committed).
 
 ## License
 
