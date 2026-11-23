@@ -51,5 +51,5 @@ handl-kit-eqsat = { path = "../host/crates/handl-kit-eqsat" }
 handl-kit-mlopt = { path = "../host/crates/kit-mlopt" }
 hnl-ext-mlopt = { path = "../host/crates/hnl-ext-mlopt" }
 
-[patch."https://github.com/handl-lang/engine-test"]
-handl-kit-test = { path = "../engine-test/crates/kit-test" }
+[patch."https://github.com/handl-lang/tool-test"]
+handl-kit-test = { path = "../tool-test/crates/kit-test" }

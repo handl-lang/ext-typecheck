@@ -25,8 +25,8 @@ in a thread-local cache and hands the tooling host a capture-less closure.
 hnl (host-cli, dumb host)
   └─ libhnl_ext_typecheck.so   ← this crate: manifest + dispatch + command
        ├─ handl-plugin-ext-typecheck   capability adapter
-       ├─ hnl-engine-typecheck-nbe     canonical NBE engine
-       ├─ hnl-engine-typecheck         TypecheckEngine trait (via nbe)
+       ├─ hnl-tool-typecheck-nbe     canonical NBE engine
+       ├─ hnl-tool-typecheck         TypecheckEngine trait (via nbe)
        └─ handl-kit-prelude / -pkg     kit assembly + project discovery
 ```
 

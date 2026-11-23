@@ -28,7 +28,7 @@ No paths → source is read from stdin.
 | piece | role |
 |---|---|
 | `handl-plugin-ext-typecheck` (`TypecheckPlugin`) | the `typecheck` capability adapter |
-| `hnl-engine-typecheck-nbe` | the canonical NBE typecheck engine |
+| `hnl-tool-typecheck-nbe` | the canonical NBE typecheck engine |
 | `handl-kit-prelude` (`Kit`) | canonical kit assembly: language, module chain, engine registry |
 | `handl-kit-pkg` (`KitProjectExt`) | `Kit::discover` — `.handl.toml` project discovery |
 

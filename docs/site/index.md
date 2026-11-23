@@ -10,7 +10,7 @@ An `ext-*` crate: the canonical typechecker packaged as a
 `~/.handl/ext/`, or a dev `target/debug/` next to the `hnl` binary.
 
 The checker logic itself lives in `handl-plugin-ext-typecheck` (the capability
-adapter) and `hnl-engine-typecheck-nbe` (the canonical NBE engine); this crate
+adapter) and `hnl-tool-typecheck-nbe` (the canonical NBE engine); this crate
 is the *packaging* — it exports the ADR-0149 ABI
 (`handl_ext_manifest` / `handl_ext_dispatch` / `handl_ext_free`) and implements
 the `hnl typecheck [paths...]` command surface, with `check` as a registered
