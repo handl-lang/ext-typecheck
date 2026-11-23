@@ -21,7 +21,7 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 handl-ext = { git = "https://github.com/handl-lang/kernel", branch = "main" }
 handl-language = { git = "https://github.com/handl-lang/kernel", branch = "main" }
-handl-kit-prelude = { git = "https://github.com/handl-lang/kit-prelude", branch = "main" }
+handl-kit-prelude = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-kit-pkg = { git = "https://github.com/handl-lang/kit-pkg", branch = "main" }
 handl-platform = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-plugin-ext-detect = { git = "https://github.com/handl-lang/host", branch = "main" }
@@ -33,3 +33,23 @@ serde_json = "1"
 
 [profile.dev]
 opt-level = 1
+
+# T-124–T-126: the folded kit crates resolve from the sibling `../host`
+# checkout — several vendor `../../../lib-*` packages in build.rs, which
+# a bare git checkout cannot see.
+[patch."https://github.com/handl-lang/host"]
+handl-kit-core = { path = "../host/crates/handl-kit-core" }
+handl-kit-prelude = { path = "../host/crates/kit-prelude" }
+handl-kit-data-prelude = { path = "../host/crates/handl-kit-data-prelude" }
+handl-kit-prelude-lang = { path = "../host/crates/handl-kit-prelude-lang" }
+handl-kit-stdlib = { path = "../host/crates/handl-kit-stdlib" }
+handl-kit-server = { path = "../host/crates/handl-kit-server" }
+handl-kit-ffi = { path = "../host/crates/handl-kit-ffi" }
+handl-plugin-ffi = { path = "../host/crates/plugin-ffi" }
+handl-kit-lang = { path = "../host/crates/handl-kit-lang" }
+handl-kit-eqsat = { path = "../host/crates/handl-kit-eqsat" }
+handl-kit-mlopt = { path = "../host/crates/kit-mlopt" }
+hnl-ext-mlopt = { path = "../host/crates/hnl-ext-mlopt" }
+
+[patch."https://github.com/handl-lang/engine-test"]
+handl-kit-test = { path = "../engine-test/crates/kit-test" }
