@@ -255,7 +255,10 @@ fn typecheck_one(
     // so the source-only scope check sees them (same seeding as `hnl run`).
     let bases = spec_resolution_bases(Path::new(path), module_root);
     let deps = handl_platform::discover_dependencies(Path::new(path)).unwrap_or_default();
-    let spliced: Vec<String> = spliced_import_names(src, &bases, &deps)
+    // P-013 T-150: the consuming package's `pkg.hnl` dep scopes — seed
+    // exactly the declared surface, matching the `ModuleLoader` filter.
+    let dep_scopes = handl_platform::discover_dep_scopes(Path::new(path));
+    let spliced: Vec<String> = spliced_import_names(src, &bases, &deps, &dep_scopes)
         .into_iter()
         .collect();
     // `*.test.hnl` files are test-dialect sources: they use the ADR-0089
@@ -465,6 +468,7 @@ fn spliced_import_names(
     src: &str,
     bases: &[PathBuf],
     deps: &std::collections::HashMap<String, PathBuf>,
+    scopes: &std::collections::HashMap<String, handl_platform::PkgDepScope>,
 ) -> HashSet<String> {
     let mut names = HashSet::new();
     for line in src.lines() {
@@ -481,7 +485,16 @@ fn spliced_import_names(
         let Ok(mod_src) = std::fs::read_to_string(&path) else {
             continue;
         };
-        names.extend(handl_runtime::module_prep::module_export_names(&mod_src));
+        let mut exported = handl_runtime::module_prep::module_export_names(&mod_src);
+        // P-013 T-150: a dep-scoped specifier seeds only the declared
+        // `module.field` surface — a scoped-out export stays unbound.
+        if let Some((scope, _, module)) = handl_platform::dep_spec_scope(scopes, &spec) {
+            if !scope.allows_module(&module) {
+                continue;
+            }
+            exported.retain(|n| scope.allows_field(&module, n));
+        }
+        names.extend(exported);
     }
     names
 }
