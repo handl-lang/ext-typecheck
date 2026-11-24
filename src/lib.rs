@@ -407,27 +407,29 @@ fn resolve_dep_spec_path(
         None => (spec, None),
     };
     let dep_dir = deps.get(first)?;
-    let joined = match rest {
-        Some(r) if !r.is_empty() => dep_dir.join(r),
-        _ => dep_dir.clone(),
-    };
-    file_candidate(&joined, spec)
+    // pkg.hnl `modules:`/`src/` layout first (dep names are package
+    // abstractions), literal `<dep_dir>/<rest>` as fallback — same as
+    // `ModuleLoader::resolve_path` via `handl_platform::dep_spec_file`.
+    handl_platform::dep_spec_file(dep_dir, rest.unwrap_or(""))
 }
 
 /// Resolve `<spec>` to the file `ModuleLoader` would load: dependency-name
 /// resolution first, then `bases` (same order as [`spec_resolves_to_file`]).
+/// `pkg.hnl` package layouts apply exactly as in `ModuleLoader` —
+/// [`handl_platform::relative_spec_file`] tries the literal candidate
+/// first, then package prefixes of the spec.
 fn resolve_spec_path(
     spec: &str,
     bases: &[PathBuf],
     deps: &std::collections::HashMap<String, PathBuf>,
 ) -> Option<PathBuf> {
     if Path::new(spec).is_absolute() {
-        return file_candidate(Path::new(spec), spec);
+        return handl_platform::relative_spec_file(Path::new("/"), spec.trim_start_matches('/'));
     }
     resolve_dep_spec_path(spec, deps).or_else(|| {
         bases
             .iter()
-            .find_map(|base| file_candidate(&base.join(spec), spec))
+            .find_map(|base| handl_platform::relative_spec_file(base, spec))
     })
 }
 
@@ -509,32 +511,6 @@ fn spliced_import_names(
         names.extend(exported);
     }
     names
-}
-
-fn file_candidate(joined: &Path, spec: &str) -> Option<PathBuf> {
-    if joined.is_dir() {
-        let index = joined.join("index.hnl");
-        if index.is_file() {
-            return Some(index);
-        }
-        if let Some(name) = joined.file_name().and_then(|s| s.to_str()) {
-            let main = joined.join(format!("{}.hnl", name));
-            if main.is_file() {
-                return Some(main);
-            }
-        }
-    }
-    if !spec.ends_with(".hnl") {
-        let with_ext = joined.with_extension("hnl");
-        if with_ext.is_file() {
-            return Some(with_ext);
-        }
-    }
-    if joined.is_file() {
-        Some(joined.to_path_buf())
-    } else {
-        None
-    }
 }
 
 /// Extract the first `'`- or `"`-quoted string literal's contents from a
