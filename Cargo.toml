@@ -29,6 +29,7 @@ handl-plugin-ext-diag = { git = "https://github.com/handl-lang/host", branch = "
 handl-plugin-ext-typecheck = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-plugin-ext-refinement = { git = "https://github.com/handl-lang/host", branch = "main" }
 handl-runtime = { git = "https://github.com/handl-lang/host", branch = "main" }
+hnl-tool-test = { git = "https://github.com/handl-lang/tool-test", branch = "main" }
 serde_json = "1"
 
 [profile.dev]

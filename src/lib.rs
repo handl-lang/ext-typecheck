@@ -23,6 +23,7 @@ use std::sync::Arc;
 use handl_ext::{ExtRequest, ExtResponse, ExtensionManifest};
 use handl_kit_pkg::KitProjectExt;
 use handl_kit_prelude::Kit;
+use handl_language::LangError;
 use handl_platform::{CapabilityRequest, CapabilityResponse, DefaultHost, PlatformError};
 use handl_plugin_ext_detect::{Dialect, detect_dialect};
 use serde_json::json;
@@ -64,6 +65,29 @@ thread_local! {
     /// so per ADR-0128 §"The 0.8 seam" the host owns the kit cache here and
     /// injects a *capture-less* closure that reads it.
     static TOOLING_KIT: RefCell<Option<Kit>> = const { RefCell::new(None) };
+
+    /// The canonical kit ⊕ ADR-0089 test-language fragment, memoized per
+    /// thread — the language `hnl test` parses `*.test.hnl` sources with,
+    /// cached so `hnl typecheck` does not re-merge per file.
+    static TEST_LANGUAGE: RefCell<Option<handl_language::Language>> = const { RefCell::new(None) };
+}
+
+/// The test language for `*.test.hnl` sources: the kit's canonical
+/// [`Language`](handl_language::Language) merged with the ADR-0089
+/// test-language fragment — the same merge `hnl_tool_test` performs at
+/// discovery time, so `assert`/`test`-kind declarations parse identically
+/// under `hnl typecheck` and `hnl test`.
+fn test_language(kit: &Kit) -> Result<handl_language::Language, LangError> {
+    TEST_LANGUAGE.with(|cell| {
+        let mut slot = cell.borrow_mut();
+        if slot.is_none() {
+            *slot = Some(
+                hnl_tool_test::test_language(kit.lang())
+                    .map_err(|e| LangError::engine(format!("test-language merge: {e}")))?,
+            );
+        }
+        Ok(slot.as_ref().expect("language populated above").clone())
+    })
 }
 
 /// Run `f` with the thread-cached canonical kit, assembling on first use.
@@ -162,8 +186,18 @@ fn run(args: &[String], cwd: &Path) -> ExtResponse {
 fn tooling_host() -> Result<DefaultHost, PlatformError> {
     let mut host = DefaultHost::new();
     host.register_plugin(handl_plugin_ext_typecheck::TypecheckPlugin::new(
-        Arc::new(|src, prelude| {
-            with_tooling_kit(|kit| kit.typecheck_with_prelude(src, prelude))
+        Arc::new(|src, prelude, language| {
+            with_tooling_kit(|kit| match language {
+                // `*.test.hnl` sources check under the ADR-0089
+                // test-language fragment — the grammar `hnl test` evals
+                // them with (`assert`/`test` are keywords there, not
+                // canonical syntax).
+                "test" => {
+                    let lang = test_language(kit)?;
+                    kit.typecheck_with_language(src, prelude, &lang)
+                }
+                _ => kit.typecheck_with_prelude(src, prelude),
+            })
         }),
     ));
     host.load()?;
@@ -224,10 +258,21 @@ fn typecheck_one(
     let spliced: Vec<String> = spliced_import_names(src, &bases, &deps)
         .into_iter()
         .collect();
+    // `*.test.hnl` files are test-dialect sources: they use the ADR-0089
+    // test-language fragment (`assert`/`test` keywords, `=` as the
+    // assert-equality separator), which the canonical grammar cannot
+    // parse. Route them through the `language` payload tag so the
+    // checker judges them under the same merged language `hnl test`
+    // discovers and evals them with.
+    let language = if path.ends_with(".test.hnl") {
+        "test"
+    } else {
+        ""
+    };
     // Same capability path a third-party consumer uses (ADR-0085 step 4).
     let request = CapabilityRequest {
         capability: "typecheck".into(),
-        payload: json!({ "source": src, "prelude": spliced }),
+        payload: json!({ "source": src, "prelude": spliced, "language": language }),
     };
     let response = match host.run(&request) {
         Ok(r) => r,
