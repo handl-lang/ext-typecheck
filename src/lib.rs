@@ -185,8 +185,8 @@ fn run(args: &[String], cwd: &Path) -> ExtResponse {
 /// command did; only the packaging changed (ADR-0149 §Consequences).
 fn tooling_host() -> Result<DefaultHost, PlatformError> {
     let mut host = DefaultHost::new();
-    host.register_plugin(handl_plugin_ext_typecheck::TypecheckPlugin::new(
-        Arc::new(|src, prelude, language| {
+    host.register_plugin(handl_plugin_ext_typecheck::TypecheckPlugin::new(Arc::new(
+        |src, prelude, language| {
             with_tooling_kit(|kit| match language {
                 // `*.test.hnl` sources check under the ADR-0089
                 // test-language fragment — the grammar `hnl test` evals
@@ -198,8 +198,8 @@ fn tooling_host() -> Result<DefaultHost, PlatformError> {
                 }
                 _ => kit.typecheck_with_prelude(src, prelude),
             })
-        }),
-    ));
+        },
+    )));
     host.load()?;
     host.resolve_composition()
         .map_err(|e| PlatformError::Plugin(format!("tooling composition: {e}")))?;
@@ -236,7 +236,8 @@ fn typecheck_one(
             return match handl_plugin_ext_refinement::parse_contracts(src) {
                 Ok(_) => 0,
                 Err(e) => {
-                    out.stderr.push_str(&format!("{path}: contract error: {e}\n"));
+                    out.stderr
+                        .push_str(&format!("{path}: contract error: {e}\n"));
                     2
                 }
             };
@@ -336,13 +337,21 @@ fn render_line(response: &CapabilityResponse, src: &str, path: &str, msg: &str) 
     let span = response.0.get("span").and_then(|s| {
         let start = s.get("start")?.as_u64()? as usize;
         let end = s.get("end")?.as_u64()? as usize;
-        Some(handl_plugin_ext_diag::Span::from_byte_range(start, end, src))
+        Some(handl_plugin_ext_diag::Span::from_byte_range(
+            start, end, src,
+        ))
     });
     let Some(span) = span else {
         return format!("{path}: {msg}\n");
     };
-    let detail = msg.strip_prefix("typecheck errors:").unwrap_or(msg).trim_start();
-    let detail = detail.strip_prefix("typecheck:").unwrap_or(detail).trim_start();
+    let detail = msg
+        .strip_prefix("typecheck errors:")
+        .unwrap_or(msg)
+        .trim_start();
+    let detail = detail
+        .strip_prefix("typecheck:")
+        .unwrap_or(detail)
+        .trim_start();
     format!(
         "{}\n",
         handl_plugin_ext_diag::render_diagnostic(
@@ -415,8 +424,11 @@ fn resolve_spec_path(
     if Path::new(spec).is_absolute() {
         return file_candidate(Path::new(spec), spec);
     }
-    resolve_dep_spec_path(spec, deps)
-        .or_else(|| bases.iter().find_map(|base| file_candidate(&base.join(spec), spec)))
+    resolve_dep_spec_path(spec, deps).or_else(|| {
+        bases
+            .iter()
+            .find_map(|base| file_candidate(&base.join(spec), spec))
+    })
 }
 
 /// The specifier of a *splice-form* import — `import "<spec>"` or
@@ -620,8 +632,14 @@ mod kit_record_matrix {
     fn cases() -> Vec<(&'static str, &'static str)> {
         vec![
             ("lone arrow ctor", "P := {\n  PC : (x : Number) ~> P\n}\n"),
-            ("two-arg arrow ctor", "PE := {\n  PE : (pos : Number, msg : Str) ~> PE\n}\n"),
-            ("bare + arrow", "P := {\n  PN : P,\n  PC : (x : Number) ~> P\n}\n"),
+            (
+                "two-arg arrow ctor",
+                "PE := {\n  PE : (pos : Number, msg : Str) ~> PE\n}\n",
+            ),
+            (
+                "bare + arrow",
+                "P := {\n  PN : P,\n  PC : (x : Number) ~> P\n}\n",
+            ),
             ("nullary only", "N := {\n  Zero : N\n}\n"),
         ]
     }
@@ -635,8 +653,14 @@ mod kit_record_matrix {
     fn record_declarations_check_under_the_kit_language() {
         let kit = handl_kit_prelude::Kit::new().expect("kit assembles");
         let lang = kit.language();
-        eprintln!("ast.data shape: {:?}", lang.ast.get_by_identity("data").is_some());
-        eprintln!("types.data rule: {:?}", lang.types.get_by_identity("data").is_some());
+        eprintln!(
+            "ast.data shape: {:?}",
+            lang.ast.get_by_identity("data").is_some()
+        );
+        eprintln!(
+            "types.data rule: {:?}",
+            lang.types.get_by_identity("data").is_some()
+        );
         for (name, src) in cases() {
             // The CLI path: prelude-seeded check (empty prelude here).
             let out = kit.typecheck_with_prelude(src, &std::collections::HashSet::new());
