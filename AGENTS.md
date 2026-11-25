@@ -12,7 +12,7 @@ discovers at runtime.
 | `src/` | extension ABI exports + `typecheck`/`check` command wiring |
 | `docs/` | typechecker notes/docs |
 | `xtask/` | vendored gate crate (`fmt`, `clippy`, `test`, `doc`, `gate`) |
-| `workflows/gate.yaml` + `ci.sh` | per-push gate — `handl-gates` rust campaign via bupha |
+| `workflows/gate.yaml` | per-push gate — `handl-gates` rust campaign via bupha |
 
 ## Contract
 
