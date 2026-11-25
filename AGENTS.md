@@ -25,7 +25,7 @@ discovers at runtime.
 
 ```bash
 cargo run --manifest-path xtask/Cargo.toml -- gate   # fmt → clippy → test → doc
-# or: bash ci.sh   (same gate, bupha entry point)
+# or: workflows/gate.yaml   (same gate, bupha entry point)
 ```
 
 <!-- myco:agent-awareness -->
